@@ -108,9 +108,11 @@ class DirUtils implements LocalStorageImpl {
 
   Future<Directory> _getDocumentDir() async {
     if (Platform.isMacOS || Platform.isLinux) {
-      return Directory('${Platform.environment['HOME']}/.config');
+      return await Directory('${Platform.environment['HOME']}/.config')
+          .create();
     } else if (Platform.isWindows) {
-      return Directory('${Platform.environment['UserProfile']}\\.config');
+      return await Directory('${Platform.environment['UserProfile']}\\.config')
+          .create();
     }
     return await getApplicationDocumentsDirectory();
   }
